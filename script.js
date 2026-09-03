@@ -1,14 +1,9 @@
-const toggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('#nav');
-
-toggle.addEventListener('click', () => {
-  nav.style.display = nav.style.display === 'flex' ? '' : 'flex';
-});
-
-document.querySelectorAll('#nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 650) nav.style.display = '';
-  });
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
+const menuToggle=document.querySelector(".menu-toggle");
+const nav=document.querySelector("#nav");
+menuToggle?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menuToggle.setAttribute("aria-expanded",open)});
+document.querySelectorAll(".nav a").forEach(link=>link.addEventListener("click",()=>nav.classList.remove("open")));
+document.getElementById("year").textContent=new Date().getFullYear();
+const sections=[...document.querySelectorAll("main section[id]")];
+const links=[...document.querySelectorAll(".nav a")];
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+entry.target.id))}})},{rootMargin:"-35% 0px -55% 0px"});
+sections.forEach(s=>observer.observe(s));
